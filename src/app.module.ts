@@ -3,10 +3,14 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { appConfig } from './features/config/app.config';
 import { UserModule } from './features/user/user.module';
+import { EmployeeModule } from './features/employee/employee.module';
 import * as Joi from '@hapi/joi';
 import { CommonModule } from './features/common/config.module';
 import { AuthModule } from './features/auth/auth.module';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import { DepartmentModule } from './features/department/department.module';
+import { LeaveTypeModule } from './features/leave-type/leave-type.module';
+import { LeaveModule } from './features/leave/leave.module';
 import * as path from "path"
 
 @Module({
@@ -40,8 +44,11 @@ import * as path from "path"
   }),
     CommonModule,
     UserModule,
+    EmployeeModule,
     AuthModule,
-  ],
+    DepartmentModule,
+    LeaveTypeModule,
+    LeaveModule],
   controllers: [],
   providers: []
 })

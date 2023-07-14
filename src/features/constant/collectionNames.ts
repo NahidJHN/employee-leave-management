@@ -4,5 +4,6 @@ export const collectionsName = {
     employee: "Employee",
     hod: "Hot",
     department: "Department",
-    leaveType: "LeaveType"
+    leaveType: "LeaveType",
+    leave: "Leave"
 }
