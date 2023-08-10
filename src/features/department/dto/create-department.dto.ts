@@ -8,6 +8,10 @@ export class CreateDepartmentDto {
     @IsString({ message: 'Department name is required' })
     name: string;
 
+    @IsString({ message: 'Alias name is required' })
+    alias: string;
+
+    @IsOptional()
     @IsString()
     description: string;
 

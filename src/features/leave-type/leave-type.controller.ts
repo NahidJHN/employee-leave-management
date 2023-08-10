@@ -15,7 +15,7 @@ import { Types } from 'mongoose';
 import { LeaveType } from './schema/leave-type.schema';
 import { RolesEnum } from '../constant';
 
-@Controller('leave-type')
+@Controller('leave-types')
 export class LeaveTypeController {
   constructor(private readonly leaveTypeService: LeaveTypeService) { }
 

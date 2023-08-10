@@ -20,13 +20,13 @@ export class CreateUserDto {
 
     @IsOptional()
     @IsMongoId()
-    admin: string;
+    admin?: string;
 
     @IsOptional()
     @IsMongoId()
-    hod: string;
+    hod?: string;
 
     @IsOptional()
     @IsMongoId()
-    employee: string;
+    employee?: string;
 }

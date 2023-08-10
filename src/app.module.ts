@@ -1,17 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import * as path from "path"
+import * as Joi from '@hapi/joi';
 import { appConfig } from './features/config/app.config';
 import { UserModule } from './features/user/user.module';
 import { EmployeeModule } from './features/employee/employee.module';
-import * as Joi from '@hapi/joi';
 import { CommonModule } from './features/common/config.module';
 import { AuthModule } from './features/auth/auth.module';
-import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import { DepartmentModule } from './features/department/department.module';
 import { LeaveTypeModule } from './features/leave-type/leave-type.module';
 import { LeaveModule } from './features/leave/leave.module';
-import * as path from "path"
+import { AdminModule } from './features/admin/admin.module';
+import { HodModule } from './features/hod/hod.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -48,7 +50,10 @@ import * as path from "path"
     AuthModule,
     DepartmentModule,
     LeaveTypeModule,
-    LeaveModule],
+    LeaveModule,
+    AdminModule,
+    HodModule,
+  ],
   controllers: [],
   providers: []
 })

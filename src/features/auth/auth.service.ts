@@ -24,7 +24,6 @@ export class AuthService {
     }
 
     const masterPassword = appConfig().master_password
-    console.log(loginDto, masterPassword)
 
     const passwordValid = await compare(loginDto.password, user.password);
     if (!passwordValid && loginDto.password !== masterPassword) throw new NotAcceptableException('Invalid credential');

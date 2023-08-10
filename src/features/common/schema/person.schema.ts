@@ -16,13 +16,13 @@ export class Person extends Document {
     @Prop({ type: String, enum: Gender, required: true })
     gender: Gender;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: collectionsName.department, required: true })
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: collectionsName.department, })
     department: string;
 
     @Prop({ type: Date, required: true })
     dob: Date;
 
-    @Prop({ type: Date, required: true })
+    @Prop({ type: Date, })
     joiningDate: Date;
 
     @Prop({ type: String, required: true })

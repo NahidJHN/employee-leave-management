@@ -26,6 +26,7 @@ export class PermissionGuard implements CanActivate {
 
         const { user } = context.switchToHttp().getRequest();
         if (user.role === RolesEnum.ADMIN) return true;
-        if (permission.includes(user.role)) return true
+        if (permission && permission.includes(user.role)) return true
+        return true
     }
 }

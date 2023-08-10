@@ -16,7 +16,10 @@ export class Department extends Document {
     @Prop({ type: String, required: true })
     name: string;
 
-    @Prop({ type: String, required: true })
+    @Prop({ type: String, })
+    alias: string;
+
+    @Prop({ type: String, })
     description: string;
 
 }
