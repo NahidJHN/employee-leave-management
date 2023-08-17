@@ -10,17 +10,14 @@ import { collectionsName } from '../constant';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 
-
 @Injectable()
 export class DepartmentService {
   constructor(
     @InjectModel(collectionsName.department)
     private readonly departmentModel: Model<Department>,
-  ) { }
+  ) {}
 
-  async create(
-    createDepartmentDto: CreateDepartmentDto
-  ): Promise<Department> {
+  async create(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
     const hasDepartment = await this.departmentModel.findOne({
       admin: createDepartmentDto.admin,
       name: createDepartmentDto.name,
@@ -31,14 +28,17 @@ export class DepartmentService {
     }
     const department = new this.departmentModel(createDepartmentDto);
 
-    return department.save()
+    return department.save();
   }
 
   async findAll(admin: Types.ObjectId): Promise<Department[]> {
     return this.departmentModel.find({ admin });
   }
 
-  async update(id: Types.ObjectId, updateDepartmentDto: UpdateDepartmentDto): Promise<Department> {
+  async update(
+    id: Types.ObjectId,
+    updateDepartmentDto: UpdateDepartmentDto,
+  ): Promise<Department> {
     // for unique department name
     const hasDepartment = await this.departmentModel.findOne({
       name: updateDepartmentDto.name,
@@ -61,6 +61,6 @@ export class DepartmentService {
   }
 
   async remove(id: Types.ObjectId): Promise<string> {
-    return "delete action is coming soon"
+    return 'delete action is coming soon';
   }
 }

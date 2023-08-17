@@ -18,7 +18,7 @@ export class LeaveTypeService {
     @InjectModel(collectionsName.leaveType)
     private readonly leaveTypeModel: Model<LeaveType>,
     private readonly leaveService: LeaveService,
-  ) { }
+  ) {}
 
   async create(createLeaveTypeDto: CreateLeaveTypeDto): Promise<LeaveType> {
     const hasLeaveType = await this.leaveService.findOne({
@@ -35,12 +35,14 @@ export class LeaveTypeService {
     return this.leaveTypeModel.find({ admin });
   }
 
-
   async findById(id: Types.ObjectId): Promise<LeaveType> {
     return await this.leaveTypeModel.findById(id);
   }
 
-  async update(id: Types.ObjectId, updateLeaveTypeDto: UpdateLeaveTypeDto): Promise<LeaveType> {
+  async update(
+    id: Types.ObjectId,
+    updateLeaveTypeDto: UpdateLeaveTypeDto,
+  ): Promise<LeaveType> {
     // for unique leave type
     const hasLeaveType = await this.leaveTypeModel.findOne({
       name: updateLeaveTypeDto.name,
@@ -64,11 +66,14 @@ export class LeaveTypeService {
 
   async remove(id: Types.ObjectId, authUser: IAuthUser): Promise<LeaveType> {
     type leaveQuery = {
-      leaveType: Types.ObjectId,
-      admin: Types.ObjectId
-    }
+      leaveType: Types.ObjectId;
+      admin: Types.ObjectId;
+    };
 
-    const associatedLeave = await this.leaveService.findOne<leaveQuery>({ admin: authUser.admin, leaveType: id });
+    const associatedLeave = await this.leaveService.findOne<leaveQuery>({
+      admin: authUser.admin,
+      leaveType: id,
+    });
     if (associatedLeave)
       throw new BadGatewayException(
         'There are leave in this leaves type. Cannot be deleted.',

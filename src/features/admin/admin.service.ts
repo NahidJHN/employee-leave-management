@@ -11,9 +11,11 @@ import { User } from '../user/schema/user.schema';
 @Injectable()
 export class AdminService {
   constructor(
-    @InjectModel(collectionsName.admin) private readonly adminModel: Model<Admin>,
-    @Inject(forwardRef(() => UserService)) private readonly userService: Model<User>
-  ) { }
+    @InjectModel(collectionsName.admin)
+    private readonly adminModel: Model<Admin>,
+    @Inject(forwardRef(() => UserService))
+    private readonly userService: Model<User>,
+  ) {}
 
   create(createAdminDto: CreateAdminDto) {
     return 'This action adds a new admin';
@@ -26,7 +28,7 @@ export class AdminService {
   async findByUserId(userId: Types.ObjectId) {
     return this.adminModel.findOneAndUpdate({
       user: userId,
-    })
+    });
   }
 
   update(id: number, updateAdminDto: UpdateAdminDto) {

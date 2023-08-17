@@ -5,19 +5,18 @@ import { AuthUser, IAuthUser, Public } from '../common';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
-  @Post("/admin/create")
+  @Post('/admin/create')
   @Public()
   async createAdmin(@Body() createUserDto: CreateUserDto) {
-    const admin = await this.userService.createAdmin(createUserDto)
-    return { data: admin, message: "Admin created successfully" }
+    const admin = await this.userService.createAdmin(createUserDto);
+    return { data: admin, message: 'Admin created successfully' };
   }
 
-  @Get("/profile")
+  @Get('/profile')
   async getProfile(@AuthUser() authUser: IAuthUser): Promise<IProfile> {
-    const profile = await this.userService.getProfile(authUser._id)
-    return profile
+    const profile = await this.userService.getProfile(authUser._id);
+    return profile;
   }
-
 }

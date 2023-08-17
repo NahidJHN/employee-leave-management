@@ -17,25 +17,28 @@ import { RolesEnum } from '../constant';
 
 @Controller('leaves')
 export class LeaveController {
-  constructor(private readonly leaveService: LeaveService) { }
+  constructor(private readonly leaveService: LeaveService) {}
 
   @Post()
   @Permission([RolesEnum.EMPLOYEE, RolesEnum.HOD])
   async create(
-    @Body() createLeaveDto: CreateLeaveDto): Promise<{ data: Leave; message: string }> {
+    @Body() createLeaveDto: CreateLeaveDto,
+  ): Promise<{ data: Leave; message: string }> {
     const data = await this.leaveService.create(createLeaveDto);
     return { data, message: 'Leave created successfully' };
   }
 
   @Get('/:admin')
   @Permission([RolesEnum.ADMIN, RolesEnum.HOD])
-  async findAll(@Param("admin") admin: Types.ObjectId): Promise<Leave[]> {
+  async findAll(@Param('admin') admin: Types.ObjectId): Promise<Leave[]> {
     return await this.leaveService.findAll(admin);
   }
 
   @Patch(':id')
   @Permission([RolesEnum.ADMIN, RolesEnum.EMPLOYEE, RolesEnum.HOD])
-  async update(@Param('id') id: Types.ObjectId, @Body() updateLeaveDto: UpdateLeaveDto,
+  async update(
+    @Param('id') id: Types.ObjectId,
+    @Body() updateLeaveDto: UpdateLeaveDto,
   ): Promise<{ data: Leave; message: string }> {
     const data = await this.leaveService.update(id, updateLeaveDto);
     return { data, message: 'Leave updated successful' };

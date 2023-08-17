@@ -4,10 +4,10 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { CreateLeaveDto } from './dto/create-leave.dto';
 import { UpdateLeaveDto } from './dto/update-leave.dto';
 import { Leave, LeaveDocument } from './schema/leave.schema';
-import { InjectModel } from '@nestjs/mongoose';
 import { LeaveStatusEnum, collectionsName } from '../constant';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class LeaveService {
   constructor(
     @InjectModel(collectionsName.leave)
     private readonly leaveModel: Model<Leave>,
-  ) { }
+  ) {}
 
   async create(createLeaveDto: CreateLeaveDto): Promise<LeaveDocument> {
     return this.leaveModel.create(createLeaveDto);
@@ -33,7 +33,9 @@ export class LeaveService {
     return this.leaveModel.findById(id);
   }
 
-  async update(id: Types.ObjectId, updateLeaveTypeDto: UpdateLeaveDto,
+  async update(
+    id: Types.ObjectId,
+    updateLeaveTypeDto: UpdateLeaveDto,
   ): Promise<LeaveDocument> {
     const leaveType = await this.leaveModel.findByIdAndUpdate(
       id,

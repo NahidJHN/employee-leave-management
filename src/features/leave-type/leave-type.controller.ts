@@ -17,7 +17,7 @@ import { RolesEnum } from '../constant';
 
 @Controller('leave-types')
 export class LeaveTypeController {
-  constructor(private readonly leaveTypeService: LeaveTypeService) { }
+  constructor(private readonly leaveTypeService: LeaveTypeService) {}
 
   @Post()
   @Permission([RolesEnum.ADMIN])
@@ -31,8 +31,8 @@ export class LeaveTypeController {
 
   @Get('/:admin')
   @Permission([RolesEnum.ADMIN, RolesEnum.EMPLOYEE, RolesEnum.HOD])
-  async findAll(@Param("admin") admin: Types.ObjectId): Promise<LeaveType[]> {
-    return await this.leaveTypeService.findAll(admin)
+  async findAll(@Param('admin') admin: Types.ObjectId): Promise<LeaveType[]> {
+    return await this.leaveTypeService.findAll(admin);
   }
 
   @Patch(':id')
@@ -50,7 +50,7 @@ export class LeaveTypeController {
   @Permission([RolesEnum.EMPLOYEE])
   async remove(
     @Param('id') id: Types.ObjectId,
-    @AuthUser() authUser: IAuthUser
+    @AuthUser() authUser: IAuthUser,
   ): Promise<{ data: LeaveType; message: string }> {
     const data = await this.leaveTypeService.remove(id, authUser);
 

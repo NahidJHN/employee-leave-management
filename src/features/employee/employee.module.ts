@@ -7,9 +7,14 @@ import { EmployeeSchema } from './schema/employee.schema';
 import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: collectionsName.employee, schema: EmployeeSchema }]), forwardRef(() => UserModule)],
+  imports: [
+    MongooseModule.forFeature([
+      { name: collectionsName.employee, schema: EmployeeSchema },
+    ]),
+    forwardRef(() => UserModule),
+  ],
   controllers: [EmployeeController],
   providers: [EmployeeService],
-  exports: [EmployeeService]
+  exports: [EmployeeService],
 })
-export class EmployeeModule { }
+export class EmployeeModule {}

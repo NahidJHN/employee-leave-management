@@ -7,8 +7,13 @@ import { LeaveTypeSchema } from './schema/leave-type.schema';
 import { LeaveModule } from '../leave/leave.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: collectionsName.leaveType, schema: LeaveTypeSchema }]), LeaveModule],
+  imports: [
+    MongooseModule.forFeature([
+      { name: collectionsName.leaveType, schema: LeaveTypeSchema },
+    ]),
+    LeaveModule,
+  ],
   controllers: [LeaveTypeController],
-  providers: [LeaveTypeService]
+  providers: [LeaveTypeService],
 })
-export class LeaveTypeModule { }
+export class LeaveTypeModule {}

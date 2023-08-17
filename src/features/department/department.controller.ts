@@ -16,20 +16,18 @@ import { UpdateDepartmentDto } from './dto/update-department.dto';
 
 @Controller('departments')
 export class DepartmentController {
-  constructor(private readonly departmentService: DepartmentService) { }
+  constructor(private readonly departmentService: DepartmentService) {}
 
   @Post()
   @Permission([RolesEnum.ADMIN])
-  async create(
-    @Body() createDepartmentDto: CreateDepartmentDto,
-  ) {
+  async create(@Body() createDepartmentDto: CreateDepartmentDto) {
     const data = await this.departmentService.create(createDepartmentDto);
     return { data, message: 'Department created successfully' };
   }
 
   @Get('/:admin')
   @Permission([RolesEnum.ADMIN, RolesEnum.HOD])
-  async findAll(@Param("admin") admin: Types.ObjectId) {
+  async findAll(@Param('admin') admin: Types.ObjectId) {
     return await this.departmentService.findAll(admin);
   }
 

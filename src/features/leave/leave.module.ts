@@ -6,9 +6,13 @@ import { collectionsName } from '../constant';
 import { LeaveSchema } from './schema/leave.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: collectionsName.leave, schema: LeaveSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: collectionsName.leave, schema: LeaveSchema },
+    ]),
+  ],
   controllers: [LeaveController],
   providers: [LeaveService],
-  exports: [LeaveService]
+  exports: [LeaveService],
 })
-export class LeaveModule { }
+export class LeaveModule {}

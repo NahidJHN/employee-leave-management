@@ -1,3 +1,3 @@
-import { PersonDto } from "src/features/common";
+import { PersonDto } from 'src/features/common';
 
-export class CreateHodDto extends PersonDto { }
+export class CreateHodDto extends PersonDto {}

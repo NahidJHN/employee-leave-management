@@ -6,8 +6,12 @@ import { collectionsName } from '../constant';
 import { DepartmentSchema } from './schema/department.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: collectionsName.department, schema: DepartmentSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: collectionsName.department, schema: DepartmentSchema },
+    ]),
+  ],
   controllers: [DepartmentController],
-  providers: [DepartmentService]
+  providers: [DepartmentService],
 })
-export class DepartmentModule { }
+export class DepartmentModule {}

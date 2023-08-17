@@ -9,9 +9,16 @@ import { HodModule } from '../hod/hod.module';
 import { EmployeeModule } from '../employee/employee.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: collectionsName.user, schema: UserSchema }]), forwardRef(() => AdminModule), forwardRef(() => HodModule), forwardRef(() => EmployeeModule)],
+  imports: [
+    MongooseModule.forFeature([
+      { name: collectionsName.user, schema: UserSchema },
+    ]),
+    forwardRef(() => AdminModule),
+    forwardRef(() => HodModule),
+    forwardRef(() => EmployeeModule),
+  ],
   controllers: [UserController],
   providers: [UserService],
-  exports: [UserService]
+  exports: [UserService],
 })
-export class UserModule { }
+export class UserModule {}
