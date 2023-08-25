@@ -11,6 +11,7 @@ import { Types } from 'mongoose';
 import { LeaveStatusEnum } from 'src/features/constant';
 
 export class CreateLeaveDto {
+  @IsNotEmpty()
   @IsMongoId()
   admin: Types.ObjectId;
 
@@ -21,6 +22,10 @@ export class CreateLeaveDto {
   @IsNotEmpty()
   @IsMongoId()
   leaveType: Types.ObjectId;
+
+  @IsNotEmpty()
+  @IsMongoId()
+  department: Types.ObjectId;
 
   @IsNotEmpty()
   @IsDateString()

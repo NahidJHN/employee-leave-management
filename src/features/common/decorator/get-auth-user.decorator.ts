@@ -7,8 +7,14 @@ export const AuthUser = createParamDecorator(
     return {
       _id: req.user._id,
       admin: req.user.admin,
-      ...(req.user.employee && { employee: req.user.employee }),
-      ...(req.user.hod && { hod: req.user.hod }),
+      ...(req.user.employee && {
+        employee: req.user.employee,
+        department: req.user.department,
+      }),
+      ...(req.user.hod && {
+        hod: req.user.hod,
+        department: req.user.department,
+      }),
       role: req.user.role,
     };
   },

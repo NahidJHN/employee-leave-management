@@ -11,7 +11,7 @@ import { Types } from 'mongoose';
 import { LeaveService } from './leave.service';
 import { CreateLeaveDto } from './dto/create-leave.dto';
 import { UpdateLeaveDto } from './dto/update-leave.dto';
-import { Permission } from '../common';
+import { AuthUser, IAuthUser, Permission } from '../common';
 import { Leave } from './schema/leave.schema';
 import { RolesEnum } from '../constant';
 
@@ -30,8 +30,11 @@ export class LeaveController {
 
   @Get('/:admin')
   @Permission([RolesEnum.ADMIN, RolesEnum.HOD])
-  async findAll(@Param('admin') admin: Types.ObjectId): Promise<Leave[]> {
-    return await this.leaveService.findAll(admin);
+  async findAll(
+    @Param('admin') admin: Types.ObjectId,
+    @AuthUser() authUser: IAuthUser,
+  ): Promise<Leave[]> {
+    return await this.leaveService.findAll(admin, authUser);
   }
 
   @Patch(':id')

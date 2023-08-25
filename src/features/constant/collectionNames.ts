@@ -2,7 +2,7 @@ export const collectionsName = {
   user: 'User',
   admin: 'Admin',
   employee: 'Employee',
-  hod: 'Hot',
+  hod: 'Hod',
   department: 'Department',
   leaveType: 'LeaveType',
   leave: 'Leave',

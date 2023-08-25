@@ -21,6 +21,7 @@ export interface IProfile {
   address?: string;
   role: RolesEnum;
   availableLeaves?: number;
+  department?: Types.ObjectId;
 }
 
 @Injectable()
@@ -95,6 +96,7 @@ export class UserService {
       profile.lastName = hod.lastName;
       profile.address = hod.address;
       profile.availableLeaves = hod.availableLeaves;
+      profile.department = hod.department;
     }
     if (user.role === RolesEnum.EMPLOYEE) {
       const employee = await this.employeeService.findByUserId(user._id);
@@ -103,6 +105,7 @@ export class UserService {
       profile.lastName = employee.lastName;
       profile.address = employee.address;
       profile.availableLeaves = employee.availableLeaves;
+      profile.department = employee.department;
     }
     return profile;
   }

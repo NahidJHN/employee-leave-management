@@ -8,7 +8,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateLeaveDto } from './dto/create-leave.dto';
 import { UpdateLeaveDto } from './dto/update-leave.dto';
 import { Leave, LeaveDocument } from './schema/leave.schema';
-import { LeaveStatusEnum, collectionsName } from '../constant';
+import { LeaveStatusEnum, RolesEnum, collectionsName } from '../constant';
+import { IAuthUser } from '../common';
 
 @Injectable()
 export class LeaveService {
@@ -21,8 +22,24 @@ export class LeaveService {
     return this.leaveModel.create(createLeaveDto);
   }
 
-  async findAll(admin: Types.ObjectId): Promise<LeaveDocument[]> {
-    return this.leaveModel.find({ admin });
+  async findAll(
+    admin: Types.ObjectId,
+    authUser: IAuthUser,
+  ): Promise<LeaveDocument[]> {
+    const query = { admin };
+
+    if (authUser.role === RolesEnum.EMPLOYEE) {
+      query['employee'] = authUser.employee;
+    }
+    if (
+      authUser.role === RolesEnum.HOD ||
+      authUser.role === RolesEnum.EMPLOYEE
+    ) {
+      query['department'] = authUser.department;
+    }
+
+    const leaves = await this.leaveModel.find(query);
+    return leaves;
   }
 
   async findOne<T>(query: T): Promise<LeaveDocument> {

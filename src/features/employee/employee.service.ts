@@ -62,7 +62,13 @@ export class EmployeeService {
     authUser: IAuthUser,
   ): Promise<Employee[]> {
     const query = { admin };
+
+    //If the logged in user is an employee then return the current employee only
     if (authUser.role === RolesEnum.EMPLOYEE) query['user'] = authUser._id;
+    //if the logged in user is HOD the return the employee of its own department
+    if (authUser.role === RolesEnum.HOD)
+      query['department'] = authUser.department;
+
     return this.employeeModel
       .find(query)
       .populate({

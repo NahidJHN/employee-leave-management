@@ -1,8 +1,9 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document, Types } from 'mongoose';
 import { Person } from 'src/features/common';
 import { collectionsName } from 'src/features/constant';
 
+@Schema({ timestamps: true, versionKey: false })
 export class Hod extends Person {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: collectionsName.admin })
   admin: Types.ObjectId;

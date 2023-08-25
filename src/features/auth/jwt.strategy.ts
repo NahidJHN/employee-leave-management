@@ -46,13 +46,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       const employee = await this.employeeService.findByUserId(user._id);
       if (!employee) throw new NotAcceptableException('Invalid credential');
       authPayload.employee = employee._id;
+      authPayload.department = employee.department;
     }
     if (user.role === RolesEnum.HOD) {
       const hod = await this.hodService.findByUserId(user._id);
       if (!hod) throw new NotAcceptableException('Invalid credential');
       authPayload.hod = hod._id;
+      authPayload.department = hod.department;
     }
-
     return authPayload;
   }
 }

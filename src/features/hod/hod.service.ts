@@ -33,7 +33,7 @@ export class HodService {
       const user = await this.userService.create(
         {
           email: createHodDto.email,
-          role: RolesEnum.EMPLOYEE,
+          role: RolesEnum.HOD,
           password: '123456',
           mobile: createHodDto.mobile,
           hod: hod._id,

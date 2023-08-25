@@ -6,5 +6,6 @@ export interface IAuthUser {
   admin: Types.ObjectId;
   employee?: Types.ObjectId;
   hod?: Types.ObjectId;
+  department?: Types.ObjectId;
   role: RolesEnum;
 }

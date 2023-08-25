@@ -1,5 +1,5 @@
 import { Prop } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Types } from 'mongoose';
 import { Gender, collectionsName } from 'src/features/constant';
 
 export class Person extends Document {
@@ -23,7 +23,7 @@ export class Person extends Document {
     type: mongoose.Schema.Types.ObjectId,
     ref: collectionsName.department,
   })
-  department: string;
+  department: Types.ObjectId;
 
   @Prop({ type: Date, required: true })
   dob: Date;
