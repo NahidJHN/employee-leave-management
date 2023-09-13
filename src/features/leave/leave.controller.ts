@@ -48,12 +48,11 @@ export class LeaveController {
   }
 
   @Delete(':id')
-  @Permission([RolesEnum.ADMIN, RolesEnum.EMPLOYEE])
+  @Permission([RolesEnum.ADMIN, RolesEnum.HOD, RolesEnum.EMPLOYEE])
   async remove(
     @Param('id') id: Types.ObjectId,
   ): Promise<{ data: Leave; message: string }> {
     const data = await this.leaveService.remove(id);
-
     return { data, message: 'Leave deleted successful' };
   }
 }

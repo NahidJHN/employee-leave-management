@@ -38,7 +38,10 @@ export class LeaveService {
       query['department'] = authUser.department;
     }
 
+    if (authUser.role === RolesEnum.ADMIN)
+      query['hodStatus'] = LeaveStatusEnum.APPROVE;
     const leaves = await this.leaveModel.find(query);
+
     return leaves;
   }
 
@@ -52,17 +55,15 @@ export class LeaveService {
 
   async update(
     id: Types.ObjectId,
-    updateLeaveTypeDto: UpdateLeaveDto,
+    updateLeaveDto: UpdateLeaveDto,
   ): Promise<LeaveDocument> {
-    const leaveType = await this.leaveModel.findByIdAndUpdate(
+    const leave = await this.leaveModel.findByIdAndUpdate(
       id,
-      { $set: updateLeaveTypeDto },
+      { $set: updateLeaveDto },
       { new: true },
     );
-
-    if (!leaveType) throw new NotFoundException('Leave not found');
-
-    return leaveType;
+    if (!leave) throw new NotFoundException('Leave not found');
+    return leave;
   }
 
   async remove(id: Types.ObjectId): Promise<LeaveDocument> {
@@ -72,12 +73,10 @@ export class LeaveService {
     }
 
     if (
-      leave.hodStatus === LeaveStatusEnum.PENDING &&
-      leave.adminStatus === LeaveStatusEnum.PENDING
+      leave.hodStatus !== LeaveStatusEnum.PENDING &&
+      leave.adminStatus !== LeaveStatusEnum.PENDING
     ) {
-      throw new BadRequestException(
-        'There are leaves in this status pending. Cannot be deleted.',
-      );
+      throw new BadRequestException('Only pending leave will be deletable');
     }
     return this.leaveModel.findByIdAndDelete(id);
   }

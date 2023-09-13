@@ -18,17 +18,29 @@ export class Leave extends Document {
     ref: collectionsName.employee,
     required: true,
   })
+  user: Types.ObjectId;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: collectionsName.employee,
+  })
   employee: Types.ObjectId;
 
   @Prop({
-    Type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: collectionsName.hod,
+  })
+  hod: Types.ObjectId;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
     ref: collectionsName.leaveType,
     required: true,
   })
   leaveType: Types.ObjectId;
 
   @Prop({
-    Type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: collectionsName.department,
     required: true,
   })

@@ -17,7 +17,15 @@ export class CreateLeaveDto {
 
   @IsNotEmpty()
   @IsMongoId()
+  user: Types.ObjectId;
+
+  @IsOptional()
+  @IsMongoId()
   employee: Types.ObjectId;
+
+  @IsOptional()
+  @IsMongoId()
+  hod: Types.ObjectId;
 
   @IsNotEmpty()
   @IsMongoId()

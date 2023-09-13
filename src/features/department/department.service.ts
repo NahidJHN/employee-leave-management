@@ -60,7 +60,7 @@ export class DepartmentService {
     return department;
   }
 
-  async remove(id: Types.ObjectId): Promise<string> {
-    return 'delete action is coming soon';
+  async remove(id: Types.ObjectId): Promise<{ message: string }> {
+    return { message: 'delete action is coming soon' };
   }
 }

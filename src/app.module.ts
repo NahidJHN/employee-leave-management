@@ -14,6 +14,7 @@ import { LeaveTypeModule } from './features/leave-type/leave-type.module';
 import { LeaveModule } from './features/leave/leave.module';
 import { AdminModule } from './features/admin/admin.module';
 import { HodModule } from './features/hod/hod.module';
+import { DashboardModule } from './features/dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { HodModule } from './features/hod/hod.module';
     LeaveModule,
     AdminModule,
     HodModule,
+    DashboardModule,
   ],
   controllers: [],
   providers: [],
