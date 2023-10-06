@@ -109,7 +109,7 @@ export class EmployeeService {
       throw new BadRequestException('This email has already used');
 
     const employee = await this.employeeModel
-      .findByIdAndUpdate(id, { $set: updateEmployeeDto })
+      .findByIdAndUpdate(id, { $set: updateEmployeeDto }, { new: true })
       .populate({
         path: 'user',
         select: 'email mobile',
