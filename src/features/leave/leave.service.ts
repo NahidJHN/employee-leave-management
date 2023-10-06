@@ -25,9 +25,9 @@ export class LeaveService {
   async findAll(
     admin: Types.ObjectId,
     authUser: IAuthUser,
+    sort: string,
   ): Promise<LeaveDocument[]> {
     const query = { admin };
-
     if (authUser.role === RolesEnum.EMPLOYEE) {
       query['employee'] = authUser.employee;
     }
@@ -40,8 +40,10 @@ export class LeaveService {
 
     if (authUser.role === RolesEnum.ADMIN)
       query['hodStatus'] = LeaveStatusEnum.APPROVE;
-    const leaves = await this.leaveModel.find(query);
 
+    const leaves = await this.leaveModel
+      .find(query)
+      .sort({ createdAt: sort === 'asc' ? 1 : -1 });
     return leaves;
   }
 

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { LeaveService } from './leave.service';
@@ -33,8 +34,9 @@ export class LeaveController {
   async findAll(
     @Param('admin') admin: Types.ObjectId,
     @AuthUser() authUser: IAuthUser,
+    @Query('sort') sort: string,
   ): Promise<Leave[]> {
-    return await this.leaveService.findAll(admin, authUser);
+    return await this.leaveService.findAll(admin, authUser, sort);
   }
 
   @Patch(':id')
