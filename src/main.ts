@@ -40,12 +40,12 @@ async function bootstrap() {
   );
   const document: OpenAPIObject = yaml.load(yamlContent) as OpenAPIObject;
 
-  SwaggerModule.setup(process.env.SWAGGER_PREFIX, app, document);
+  SwaggerModule.setup('/api-docs', app, document);
 
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new ResponseInterceptor());
 
-  await app.listen(process.env.SERVER_PORT);
+  await app.listen(9090);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

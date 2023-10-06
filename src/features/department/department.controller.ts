@@ -44,7 +44,8 @@ export class DepartmentController {
 
   @Delete(':id')
   @Permission([RolesEnum.ADMIN])
-  remove(@Param('id') id: Types.ObjectId) {
-    return this.departmentService.remove(id);
+  async remove(@Param('id') id: Types.ObjectId) {
+    const department = await this.departmentService.remove(id);
+    return { data: department, message: 'Department deleted successfully' };
   }
 }

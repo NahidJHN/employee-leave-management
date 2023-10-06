@@ -24,7 +24,6 @@ import { DashboardModule } from './features/dashboard/dashboard.module';
       validationSchema: Joi.object({
         MONGODB_URL: Joi.required(),
         JWT_SECRET: Joi.string().required(),
-        SERVER_PORT: Joi.number().required(),
         JWT_ACCESS_EXPIRATION_MINUTES: Joi.string().required(),
         JWT_REFRESH_EXPIRATION_DAYS: Joi.number().required(),
         MASTER_PASSWORD: Joi.string().required(),

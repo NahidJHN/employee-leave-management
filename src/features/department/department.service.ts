@@ -9,12 +9,16 @@ import { Department } from './schema/department.schema';
 import { collectionsName } from '../constant';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { EmployeeService } from '../employee/employee.service';
+import { HodService } from '../hod/hod.service';
 
 @Injectable()
 export class DepartmentService {
   constructor(
     @InjectModel(collectionsName.department)
     private readonly departmentModel: Model<Department>,
+    private readonly employeeService: EmployeeService,
+    private readonly hodService: HodService,
   ) {}
 
   async create(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
@@ -60,7 +64,18 @@ export class DepartmentService {
     return department;
   }
 
-  async remove(id: Types.ObjectId): Promise<{ message: string }> {
-    return { message: 'delete action is coming soon' };
+  async remove(id: Types.ObjectId): Promise<Department> {
+    const employee = await this.employeeService.findByDepartment(id);
+    const hod = await this.hodService.findByDepartment(id);
+
+    if (employee)
+      throw new BadRequestException('This department has an employee');
+    if (hod) throw new BadRequestException('This department has a hod');
+
+    const department = await this.departmentModel.findByIdAndDelete(id);
+
+    if (!department) throw new NotFoundException('Department not found');
+
+    return department;
   }
 }

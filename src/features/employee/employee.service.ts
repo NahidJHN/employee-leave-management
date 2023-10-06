@@ -8,7 +8,7 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { RolesEnum, collectionsName } from '../constant';
-import mongoose, { Connection, Model, Types } from 'mongoose';
+import { Connection, Model, Types } from 'mongoose';
 import { Employee } from './schema/employee.schema';
 import { UserService } from '../user/user.service';
 import { IAuthUser } from '../common';
@@ -80,6 +80,10 @@ export class EmployeeService {
 
   async findByUserId(userId: Types.ObjectId): Promise<Employee> {
     return this.employeeModel.findOne({ user: userId }).exec();
+  }
+
+  async findByDepartment(departmentId: Types.ObjectId): Promise<Employee> {
+    return this.employeeModel.findOne({ department: departmentId }).exec();
   }
 
   async update(

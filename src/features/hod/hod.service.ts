@@ -69,6 +69,10 @@ export class HodService {
     return this.hodModel.findById(id);
   }
 
+  async findByDepartment(departmentId: Types.ObjectId): Promise<HodDocument> {
+    return this.hodModel.findOne({ department: departmentId }).exec();
+  }
+
   async findByUserId(userId: Types.ObjectId): Promise<HodDocument> {
     return this.hodModel.findOne({ user: userId });
   }
