@@ -12,6 +12,8 @@ import { Connection, Model, Types } from 'mongoose';
 import { Employee } from './schema/employee.schema';
 import { UserService } from '../user/user.service';
 import { IAuthUser } from '../common';
+import { LeaveService } from '../leave/leave.service';
+import { Leave, LeaveDocument } from '../leave/schema/leave.schema';
 
 @Injectable()
 export class EmployeeService {
@@ -21,6 +23,7 @@ export class EmployeeService {
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
     @InjectConnection() private readonly connection: Connection,
+    private readonly leaveService: LeaveService,
   ) {}
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
@@ -118,7 +121,33 @@ export class EmployeeService {
     return employee;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} employee`;
+  async remove(
+    id: Types.ObjectId,
+  ): Promise<{ employee: Employee; leaves: LeaveDocument[] }> {
+    const session = await this.connection.startSession();
+    try {
+      session.startTransaction();
+      //delete the employee first
+      const employee = await this.employeeModel
+        .findByIdAndDelete(id, { session })
+        .exec();
+      if (!employee) throw new BadRequestException('Employee not found');
+      //delete the user
+      await this.userService.deleteUser(employee.user, session);
+
+      //delete the user's leaves
+
+      const leaves = await this.leaveService.deleteLeavesEmployeeId(
+        id,
+        session,
+      );
+      await session.commitTransaction();
+      return { employee, leaves };
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
   }
 }

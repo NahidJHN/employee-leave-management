@@ -11,6 +11,8 @@ import { RolesEnum, collectionsName } from '../constant';
 import { Connection, Model, Types } from 'mongoose';
 import { Hod, HodDocument } from './schema/hod.schema';
 import { UserService } from '../user/user.service';
+import { LeaveService } from '../leave/leave.service';
+import { LeaveDocument } from '../leave/schema/leave.schema';
 
 @Injectable()
 export class HodService {
@@ -19,6 +21,7 @@ export class HodService {
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
     @InjectConnection() private readonly connection: Connection,
+    private readonly leaveService: LeaveService,
   ) {}
 
   async create(createHodDto: CreateHodDto): Promise<Hod> {
@@ -94,7 +97,7 @@ export class HodService {
       throw new BadRequestException('This email has already used');
 
     const hod = await this.hodModel
-      .findByIdAndUpdate(id, { $set: updateHodDto })
+      .findByIdAndUpdate(id, { $set: updateHodDto }, { new: true })
       .populate({
         path: 'user',
         select: 'email mobile',
@@ -106,7 +109,31 @@ export class HodService {
     return hod;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} hod`;
+  async remove(
+    id: Types.ObjectId,
+  ): Promise<{ hod: HodDocument; leaves: LeaveDocument[] }> {
+    const session = await this.connection.startSession();
+    try {
+      session.startTransaction();
+      const hod = await this.hodModel.findByIdAndDelete(id, { session }).exec();
+      if (!hod) throw new BadRequestException('Hod not found');
+
+      //delete the user data
+      await this.userService.deleteUser(hod.user, session);
+
+      //delete all leaves
+      const leaves = await this.leaveService.deleteLeavesByHodId(
+        hod._id,
+        session,
+      );
+      await session.commitTransaction();
+
+      return { hod, leaves };
+    } catch (error) {
+      await session.abortTransaction();
+      throw error;
+    } finally {
+      session.endSession();
+    }
   }
 }

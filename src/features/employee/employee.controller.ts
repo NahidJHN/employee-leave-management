@@ -32,15 +32,17 @@ export class EmployeeController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: Types.ObjectId,
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
-    return this.employeeService.update(id, updateEmployeeDto);
+    const data = await this.employeeService.update(id, updateEmployeeDto);
+    return { data, message: 'Employee updated successfully' };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.employeeService.remove(+id);
+  async remove(@Param('id') id: Types.ObjectId) {
+    const data = await this.employeeService.remove(id);
+    return { data, message: 'Employee deleted successfully' };
   }
 }

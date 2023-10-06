@@ -28,12 +28,17 @@ export class HodController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: Types.ObjectId, @Body() updateHodDto: UpdateHodDto) {
-    return this.hodService.update(id, updateHodDto);
+  async update(
+    @Param('id') id: Types.ObjectId,
+    @Body() updateHodDto: UpdateHodDto,
+  ) {
+    const data = await this.hodService.update(id, updateHodDto);
+    return { data, message: 'Hod updated successfully' };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.hodService.remove(+id);
+  async remove(@Param('id') id: Types.ObjectId) {
+    const data = await this.hodService.remove(id);
+    return { data, message: 'Hod deleted successfully' };
   }
 }

@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { collectionsName } from '../constant';
 import { HodSchema } from './schema/hod.schema';
 import { UserModule } from '../user/user.module';
+import { LeaveModule } from '../leave/leave.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UserModule } from '../user/user.module';
       { name: collectionsName.hod, schema: HodSchema },
     ]),
     forwardRef(() => UserModule),
+    LeaveModule,
   ],
   controllers: [HodController],
   providers: [HodService],

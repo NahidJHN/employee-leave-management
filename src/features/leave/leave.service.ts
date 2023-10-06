@@ -1,4 +1,4 @@
-import { Model, Types } from 'mongoose';
+import { ClientSession, Model, Types } from 'mongoose';
 import {
   BadRequestException,
   Injectable,
@@ -81,5 +81,29 @@ export class LeaveService {
       throw new BadRequestException('Only pending leave will be deletable');
     }
     return this.leaveModel.findByIdAndDelete(id);
+  }
+
+  private async removeByUser(
+    employee: Types.ObjectId,
+    hod: Types.ObjectId,
+    session: ClientSession,
+  ): Promise<LeaveDocument[]> {
+    const query = { ...(employee && { employee }), ...(hod && { hod }) };
+    const leaves = this.leaveModel.find(query, { session });
+    return leaves.deleteMany().session(session).exec();
+  }
+
+  async deleteLeavesEmployeeId(
+    employee: Types.ObjectId,
+    session: ClientSession,
+  ): Promise<LeaveDocument[]> {
+    return this.removeByUser(employee, null, session);
+  }
+
+  async deleteLeavesByHodId(
+    hod: Types.ObjectId,
+    session: ClientSession,
+  ): Promise<LeaveDocument[]> {
+    return this.removeByUser(null, hod, session);
   }
 }

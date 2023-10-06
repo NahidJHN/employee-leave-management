@@ -8,7 +8,7 @@ export class Person extends Document {
     ref: collectionsName.user,
     required: true,
   })
-  user: string;
+  user: Types.ObjectId;
 
   @Prop({ type: String, required: true })
   firstName: string;

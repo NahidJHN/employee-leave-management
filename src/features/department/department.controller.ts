@@ -28,7 +28,9 @@ export class DepartmentController {
   @Get('/:admin')
   @Permission([RolesEnum.ADMIN, RolesEnum.HOD])
   async findAll(@Param('admin') admin: Types.ObjectId) {
-    return await this.departmentService.findAll(admin);
+    const data = await this.departmentService.findAll(admin);
+    console.log('data', admin);
+    return data;
   }
 
   @Patch(':id')

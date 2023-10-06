@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { collectionsName } from '../constant';
 import { EmployeeSchema } from './schema/employee.schema';
 import { UserModule } from '../user/user.module';
+import { LeaveModule } from '../leave/leave.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { UserModule } from '../user/user.module';
       { name: collectionsName.employee, schema: EmployeeSchema },
     ]),
     forwardRef(() => UserModule),
+    LeaveModule,
   ],
   controllers: [EmployeeController],
   providers: [EmployeeService],

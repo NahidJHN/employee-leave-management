@@ -109,4 +109,11 @@ export class UserService {
     }
     return profile;
   }
+
+  async deleteUser(
+    userId: Types.ObjectId,
+    session: ClientSession,
+  ): Promise<User> {
+    return this.userModel.findByIdAndDelete(userId, { session });
+  }
 }
