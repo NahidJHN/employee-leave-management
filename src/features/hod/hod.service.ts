@@ -46,7 +46,12 @@ export class HodService {
 
       hod.user = user._id;
 
-      await hod.save({ session });
+      await (
+        await hod.save({ session })
+      ).populate({
+        path: 'user',
+        select: 'email mobile',
+      });
       await session.commitTransaction();
 
       return hod;

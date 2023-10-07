@@ -13,7 +13,7 @@ import { Employee } from './schema/employee.schema';
 import { UserService } from '../user/user.service';
 import { IAuthUser } from '../common';
 import { LeaveService } from '../leave/leave.service';
-import { Leave, LeaveDocument } from '../leave/schema/leave.schema';
+import { LeaveDocument } from '../leave/schema/leave.schema';
 
 @Injectable()
 export class EmployeeService {
@@ -48,7 +48,13 @@ export class EmployeeService {
 
       employee.user = user._id;
 
-      await employee.save({ session });
+      await (
+        await employee.save({ session })
+      ).populate({
+        path: 'user',
+        select: 'email mobile',
+      });
+
       await session.commitTransaction();
 
       return employee;
