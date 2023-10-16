@@ -42,3 +42,4 @@ package-json.lock
 
 #env
 .env
+.vercel
