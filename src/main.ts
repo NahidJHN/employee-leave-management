@@ -15,7 +15,11 @@ import { ResponseInterceptor } from './features/common/interceptor/response/resp
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: 'https://leave-management-frontend.web.app',
+    origin: [
+      'https://leave-management-frontend.web.app',
+      'https://leave-pi.vercel.app',
+      'http://localhost:5009',
+    ],
   });
   app.useGlobalPipes(
     new ValidationPipe({
