@@ -15,6 +15,9 @@ import { LeaveModule } from './features/leave/leave.module';
 import { AdminModule } from './features/admin/admin.module';
 import { HodModule } from './features/hod/hod.module';
 import { DashboardModule } from './features/dashboard/dashboard.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TasksService } from './jobs/jobs.service';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
@@ -45,6 +48,8 @@ import { DashboardModule } from './features/dashboard/dashboard.module';
         AcceptLanguageResolver,
       ],
     }),
+    HttpModule,
+    ScheduleModule.forRoot(),
     CommonModule,
     UserModule,
     EmployeeModule,
@@ -57,6 +62,6 @@ import { DashboardModule } from './features/dashboard/dashboard.module';
     DashboardModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [TasksService], //for task schedule
 })
 export class AppModule {}
