@@ -76,6 +76,6 @@ export class DepartmentService {
 
     if (!department) throw new NotFoundException('Department not found');
 
-    return department;
+    return department as any;
   }
 }

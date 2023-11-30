@@ -80,7 +80,7 @@ export class LeaveService {
     ) {
       throw new BadRequestException('Only pending leave will be deletable');
     }
-    return this.leaveModel.findByIdAndDelete(id);
+    return this.leaveModel.findByIdAndDelete(id) as any;
   }
 
   private async removeByUser(

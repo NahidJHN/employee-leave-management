@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { Types } from 'mongoose';
 import { DepartmentService } from './department.service';
-import { Permission, IAuthUser, Public, AuthUser } from '../common';
+import { Permission } from '../common';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { RolesEnum } from '../constant';
 import { UpdateDepartmentDto } from './dto/update-department.dto';

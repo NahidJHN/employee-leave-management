@@ -85,6 +85,6 @@ export class LeaveTypeService {
       throw new NotFoundException('Leave type not found');
     }
 
-    return leaveType;
+    return leaveType as any;
   }
 }
